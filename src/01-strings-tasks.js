@@ -206,7 +206,7 @@ function getRectangleString(width, height) {
   const midLevel = `│${' '.repeat(width - 2)}│\n`;
 
   return `┌${'─'.repeat(width - 2)}┐\n${midLevel.repeat(
-    height - 2
+    height - 2,
   )}└${'─'.repeat(width - 2)}┘\n`;
 }
 

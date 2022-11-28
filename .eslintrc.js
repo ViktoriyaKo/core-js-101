@@ -13,18 +13,5 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2018,
   },
-  rules: {
-    'comma-dangle': ['error', 'ignore'],
-    // or
-    'comma-dangle': [
-      'error',
-      {
-        arrays: 'ignore',
-        objects: 'ignore',
-        imports: 'ignore',
-        exports: 'ignore',
-        functions: 'ignore',
-      },
-    ],
-  },
+  rules: {},
 };
