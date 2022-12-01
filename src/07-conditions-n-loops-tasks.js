@@ -205,8 +205,24 @@ function findFirstSingleChar(str) {
  *   5, 3, true, true   => '[3, 5]'
  *
  */
-function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
-  throw new Error('Not implemented');
+function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
+  let symbolStart;
+  let symbolEnd;
+  if (isStartIncluded === true) {
+    symbolStart = '[';
+  }
+  if (isStartIncluded === false) {
+    symbolStart = '(';
+  }
+  if (isEndIncluded === true) {
+    symbolEnd = ']';
+  } else {
+    symbolEnd = ')';
+  }
+  if (a > b) {
+    return `${symbolStart}${b}, ${a}${symbolEnd}`;
+  }
+  return `${symbolStart}${a}, ${b}${symbolEnd}`;
 }
 
 /**
@@ -221,8 +237,8 @@ function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
  * 'rotator' => 'rotator'
  * 'noon' => 'noon'
  */
-function reverseString(/* str */) {
-  throw new Error('Not implemented');
+function reverseString(str) {
+  return str.split('').reverse().join('');
 }
 
 /**
@@ -237,8 +253,9 @@ function reverseString(/* str */) {
  *   87354 => 45378
  *   34143 => 34143
  */
-function reverseInteger(/* num */) {
-  throw new Error('Not implemented');
+function reverseInteger(num) {
+  const res = String(num).split('').reverse().join('');
+  return +res;
 }
 
 /**
@@ -261,9 +278,28 @@ function reverseInteger(/* num */) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  const res = [];
+  const arr = String(ccn).split('').reverse();
+
+  for (let i = 0; i < arr.length; i += 1) {
+    if (i % 2 !== 0) {
+      if (+arr[i] * 2 > 9) {
+        arr[i] = String(+arr[i] * 2)
+          .split('')
+          .map((item) => +item)
+          .reduce((accum, value) => accum + value);
+        res.push(+arr[i]);
+      } else {
+        res.push(+arr[i] * 2);
+      }
+    } else {
+      res.push(+arr[i]);
+    }
+  }
+  return res.reduce((accum, value) => accum + value) % 10 === 0;
 }
+
 
 /**
  * Returns the digital root of integer:
@@ -279,8 +315,14 @@ function isCreditCardNumber(/* ccn */) {
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
-function getDigitalRoot(/* num */) {
-  throw new Error('Not implemented');
+function getDigitalRoot(num) {
+  const res = String(num)
+    .split('')
+    .reduce((accum, item) => accum + +item, 0);
+  if (res > 9) {
+    return getDigitalRoot(res);
+  }
+  return res;
 }
 
 /**
