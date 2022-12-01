@@ -173,9 +173,14 @@ function isInsideCircle(circle, point) {
  */
 function findFirstSingleChar(str) {
   const arr = str.split('');
+  let res;
   for (let i = 0; i < arr.length; i += 1) {
-    if (arr.indexOf(arr[i]) === arr.lastIndexOf(arr[i])) return arr[i];
+    if (arr.indexOf(arr[i]) === arr.lastIndexOf(arr[i])) {
+      res = arr[i];
+      return res;
+    }
   }
+  return res;
 }
 
 /**
