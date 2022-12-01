@@ -6,7 +6,6 @@
  *                                                                                                *
  ************************************************************************************************ */
 
-
 /**
  * Returns the rectangle object with width and height parameters and getArea() method
  *
@@ -30,7 +29,6 @@ function Rectangle(width, height) {
   };
 }
 
-
 /**
  * Returns the JSON representation of specified object
  *
@@ -41,10 +39,9 @@ function Rectangle(width, height) {
  *    [1,2,3]   =>  '[1,2,3]'
  *    { width: 10, height : 20 } => '{"height":10,"width":20}'
  */
-function getJSON(/* obj */) {
-  throw new Error('Not implemented');
+function getJSON(obj) {
+  return JSON.stringify(obj);
 }
-
 
 /**
  * Returns the object of specified type from JSON representation
@@ -57,10 +54,10 @@ function getJSON(/* obj */) {
  *    const r = fromJSON(Circle.prototype, '{"radius":10}');
  *
  */
-function fromJSON(/* proto, json */) {
-  throw new Error('Not implemented');
-}
 
+function fromJSON(proto, json) {
+  return Object.setPrototypeOf(JSON.parse(json), proto);
+}
 
 /**
  * Css selectors builder
@@ -81,7 +78,7 @@ function fromJSON(/* proto, json */) {
  *
  * Provided cssSelectorBuilder should be used as facade only to create your own classes,
  * for example the first method of cssSelectorBuilder can be like this:
- *   element: function(value) {
+ *   elementvalue) {
  *       return new MySuperBaseElementSelector(...)...
  *   },
  *
@@ -115,37 +112,51 @@ function fromJSON(/* proto, json */) {
  *
  *  For more examples see unit tests.
  */
+// НЕВЕРНО!!!!!!!!!!!!!!!!
+class Css {
+  constructor(value) {
+    this.value = value;
+  }
+}
 
 const cssSelectorBuilder = {
-  element(/* value */) {
-    throw new Error('Not implemented');
+  value: '',
+  element(value) {
+    this.value += value;
+    return new Css(this.value);
   },
 
-  id(/* value */) {
-    throw new Error('Not implemented');
+  id(value) {
+    this.value += `#${value}`;
+    return new Css(this.value);
   },
 
-  class(/* value */) {
-    throw new Error('Not implemented');
+  class(value) {
+    this.value += `.${value}`;
+    return new Css(this.value);
   },
 
-  attr(/* value */) {
-    throw new Error('Not implemented');
+  attr(value) {
+    this.value += `[${value}]`;
+    return new Css(this.value);
   },
 
-  pseudoClass(/* value */) {
-    throw new Error('Not implemented');
+  pseudoClass(value) {
+    this.value += `:${value}`;
+    return new Css(this.value);
   },
 
-  pseudoElement(/* value */) {
-    throw new Error('Not implemented');
+  pseudoElement(value) {
+    this.value += `::${value}`;
+    return new Css(this.value);
   },
-
-  combine(/* selector1, combinator, selector2 */) {
-    throw new Error('Not implemented');
+  stringify() {
+    return this.value;
+  },
+  combine(selector1, combinator, selector2) {
+    return new Css(`${selector1.value} ${combinator} ${selector2.value}`);
   },
 };
-
 
 module.exports = {
   Rectangle,
