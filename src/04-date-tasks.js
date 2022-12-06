@@ -100,12 +100,13 @@ function timeSpanToString(startDate, endDate) {
  */
 function angleBetweenClockHands(date) {
   let hours = date.getHours();
-  if (date.getHours() > 12) {
+  if (date.getHours() >= 12) {
     hours = date.getHours() - 12;
   }
   const minutes = date.getMinutes();
   const deg = Math.abs(hours * 30 + minutes / 2 - minutes * 6);
-  const degMin = Math.min(deg, 360 - deg);
+  let degMin = Math.abs(Math.min(deg, 360 - deg) - 90);
+  if (deg === 270) degMin = 180;
   const degRad = (Math.PI * degMin) / 180;
   return degRad;
 }

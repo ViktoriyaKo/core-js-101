@@ -120,8 +120,11 @@ function isTriangle(a, b, c) {
  *   { top:20, left:20, width: 20, height: 20 }    =>  false
  *
  */
-function doRectanglesOverlap(/* rect1, rect2 */) {
-  throw new Error('Not implemented');
+function doRectanglesOverlap(rect1, rect2) {
+  const bottomRightPointX = rect1.top + rect1.height;
+  const bottomRightPointY = rect1.left + rect1.width;
+  if (bottomRightPointX > rect2.top && bottomRightPointY > rect2.left) return true;
+  return false;
 }
 
 /**
@@ -443,8 +446,20 @@ function getCommonDirectoryPath(pathes) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  const rowsM1 = m1.length;
+  const rowsM2 = m2.length;
+  const colsM2 = m2[0].length;
+  const res = [];
+  for (let i = 0; i < rowsM1; i += 1) res[i] = [];
+  for (let k = 0; k < colsM2; k += 1) {
+    for (let i = 0; i < rowsM1; i += 1) {
+      let y = 0;
+      for (let j = 0; j < rowsM2; j += 1) y += m1[i][j] * m2[j][k];
+      res[i][k] = y;
+    }
+  }
+  return res;
 }
 
 /**
