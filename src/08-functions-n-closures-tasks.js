@@ -45,10 +45,9 @@ function getComposition(f, g) {
  *
  */
 function getPowerFunction(exponent) {
-  return function (x) {
-    return x ** exponent;
-  };
+  return (x) => x ** exponent;
 }
+
 
 /**
  * Returns the polynom function of one argument based on specified coefficients.
