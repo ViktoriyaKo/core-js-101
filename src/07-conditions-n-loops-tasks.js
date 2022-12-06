@@ -300,7 +300,6 @@ function isCreditCardNumber(ccn) {
   return res.reduce((accum, value) => accum + value) % 10 === 0;
 }
 
-
 /**
  * Returns the digital root of integer:
  *   step1 : find sum of all digits
@@ -346,8 +345,26 @@ function getDigitalRoot(num) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  const brecets = {
+    '}': '{',
+    ']': '[',
+    ')': '(',
+    '>': '<',
+  };
+  const stack = [];
+  const arr = str.split('');
+  for (let i = 0; i < arr.length; i += 1) {
+    if (Object.values(brecets).includes(arr[i])) {
+      stack.push(arr[i]);
+    } else if (brecets[arr[i]] === stack[stack.length - 1]) {
+      stack.pop();
+    } else {
+      stack.push(arr[i]);
+    }
+  }
+  if (stack.length === 0) return true;
+  return false;
 }
 
 /**
@@ -370,8 +387,8 @@ function isBracketsBalanced(/* str */) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  return num.toString(n);
 }
 
 /**
@@ -386,8 +403,26 @@ function toNaryString(/* num, n */) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  const splitStrings = pathes.map((item) => item.split('/'));
+  const generalArr = splitStrings.flat();
+  const result = generalArr.reduce((accum, item) => {
+    accum[item] = (accum[item] || 0) + 1; // eslint-disable-line no-param-reassign
+    return accum;
+  }, {});
+  const a = Object.entries(result)
+    .filter((item) => item[1] === pathes.length)
+    .map((item) => item[0]);
+  for (let i = 0; i < a.length; i += 1) {
+    if (a[i] === '') {
+      a[i] = '/'; // eslint-disable-line no-param-reassign
+    }
+  }
+  if (a.length > 1) {
+    a.push('');
+    return a.join('/').slice(1);
+  }
+  return a.join('/');
 }
 
 /**
