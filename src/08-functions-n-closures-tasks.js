@@ -48,7 +48,6 @@ function getPowerFunction(exponent) {
   return (x) => x ** exponent;
 }
 
-
 /**
  * Returns the polynom function of one argument based on specified coefficients.
  * See: https://en.wikipedia.org/wiki/Polynomial#Definition
@@ -107,8 +106,20 @@ function memoize(/* func */) {
  * }, 2);
  * retryer() => 2
  */
-function retry(/* func, attempts */) {
-  throw new Error('Not implemented');
+
+function retry(func, attempts) {
+  let trying = 0;
+  return function repeat() {
+    try {
+      return func();
+    } catch (err) {
+      trying += 1;
+      if (trying <= attempts) {
+        repeat();
+      }
+    }
+    return func();
+  };
 }
 
 /**
@@ -134,8 +145,16 @@ function retry(/* func, attempts */) {
  * cos(3.141592653589793) ends
  *
  */
-function logger(/* func, logFunc */) {
-  throw new Error('Not implemented');
+
+function logger(func, logFunc) {
+  return (...args) => {
+    const args1 = JSON.stringify(args);
+    const args2 = args1.slice(1, args1.length - 1);
+    logFunc(`${func.name}(${args2}) starts`);
+    const result = func(...args);
+    logFunc(`${func.name}(${args2}) ends`);
+    return result;
+  };
 }
 
 /**

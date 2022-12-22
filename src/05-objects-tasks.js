@@ -112,7 +112,7 @@ function fromJSON(proto, json) {
  *
  *  For more examples see unit tests.
  */
-
+// ошибка не срабатывает с [], {}
 const cssSelectorBuilder = {
   result: '',
   orderElement: 0,
